@@ -372,6 +372,7 @@ public class Model_Client_Mobile implements GEntity{
             poEntity.updateString("nNoRetryx", Logical.NO);
             poEntity.updateString("cMobileTp", Logical.NO);
             poEntity.updateString("cOwnerxxx", Logical.NO);
+            poEntity.updateString("cPrimaryx", Logical.NO);
             poEntity.updateString("cRecdStat", Logical.YES);
             poEntity.updateString("dLastVeri", null);
             poEntity.updateString("dInactive", null);
@@ -471,7 +472,7 @@ public class Model_Client_Mobile implements GEntity{
                 setMobileNetwork(CommonUtils.classifyNetwork(getContactNo()));
                 if ("success".equals((String) loJSON.get("result"))){
                     //replace the condition based on the primary key column of the record
-                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sMobileID = " + SQLUtil.toSQL(this.getClientID()));
+                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sMobileID = " + SQLUtil.toSQL(this.getMobileID()));
                     
                     if (!lsSQL.isEmpty()){
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
@@ -483,6 +484,7 @@ public class Model_Client_Mobile implements GEntity{
                         }
                     } else {
                         poJSON.put("result", "error");
+                        poJSON.put("continue", true);
                         poJSON.put("message", "No updates has been made.");
                     }
                 } else {
@@ -575,8 +577,7 @@ public class Model_Client_Mobile implements GEntity{
 
     @Override
     public int getEditMode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return pnEditMode;
     }
-    
     
 }

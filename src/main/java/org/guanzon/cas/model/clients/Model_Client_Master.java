@@ -271,10 +271,19 @@ public class Model_Client_Master implements GEntity{
     /**
      * @return The sex of the client.
      */
+//    public String getSex(){
+//        return (String) getValue("cGenderCd");
+//    }
+
+
     public String getSex(){
-        return (String) getValue("cGenderCd");
+        Object value = getValue("cGenderCd");
+        if (value instanceof Integer) {
+            return String.valueOf(value);
+        } else {
+            return (String) value;
+        }
     }
-    
     /**
      * Set the civil status of the client.<br>
      * 0 for Single
@@ -294,9 +303,18 @@ public class Model_Client_Master implements GEntity{
     /**
      * @return The civil status of the client.
      */
+    
     public String getCivilStatus(){
-        return (String) getValue("cCvilStat");
+        Object value = getValue("cCvilStat"); // Assuming "civilStatus" is the field representing civil status
+        if (value instanceof Integer) {
+            return String.valueOf(value);
+        } else {
+            return (String) value;
+        }
     }
+//    public String getCivilStatus(){
+//        return (String) getValue("cCvilStat");
+//    }
     
     /**
      * Sets the citizenship ID of the client.
@@ -795,7 +813,8 @@ public class Model_Client_Master implements GEntity{
                             poJSON.put("message", poGRider.getErrMsg());
                         }
                     } else {
-                        poJSON.put("result", "success");
+                        poJSON.put("result", "error");
+                        poJSON.put("continue", true);
                         poJSON.put("message", "No updates has been made.");
                     }
                 } else {
@@ -847,7 +866,7 @@ public class Model_Client_Master implements GEntity{
 
     @Override
     public int getEditMode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return pnEditMode;
     }
     
 
