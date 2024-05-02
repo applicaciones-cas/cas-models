@@ -16,6 +16,7 @@ import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.guanzon.appdriver.constant.EditMode;
+import org.guanzon.appdriver.constant.Logical;
 import org.guanzon.appdriver.constant.RecordStatus;
 import org.guanzon.appdriver.iface.GEntity;
 import org.json.simple.JSONObject;
@@ -433,6 +434,14 @@ public class Model_Client_Address implements GEntity{
                     "  a.nLatitude, " +
                     "  a.nLongitud, " +
                     "  a.cPrimaryx, " +
+                    "  a.cOfficexx, " +
+                    "  a.cProvince, " +
+                    "  a.cBillingx, " +
+                    "  a.cShipping, " +
+                    "  a.cCurrentx, " +
+                    "  a.cLTMSAddx, " +
+                    "  a.sSourceCd, " +
+                    "  a.sReferNox, " +
                     "  a.cRecdStat, " +
                     "  a.dModified, " +
                     "  b.sTownName    xTownName, " +
@@ -457,7 +466,13 @@ public class Model_Client_Address implements GEntity{
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);      
-            poEntity.updateInt("cPrimaryx", 0);
+            poEntity.updateString("cOfficexx", Logical.NO);
+            poEntity.updateString("cProvince", Logical.NO);
+            poEntity.updateString("cBillingx", Logical.NO);
+            poEntity.updateString("cShipping", Logical.NO);
+            poEntity.updateString("cCurrentx", Logical.NO);
+            poEntity.updateString("cLTMSAddx", Logical.NO);
+            poEntity.updateString("cPrimaryx", Logical.NO);
             poEntity.updateDouble("nLatitude", 0.0);
             poEntity.updateDouble("nLongitud", 0.0);
             poEntity.updateString("cRecdStat", RecordStatus.ACTIVE);
@@ -555,7 +570,7 @@ public class Model_Client_Address implements GEntity{
                 
                 if ("success".equals((String) loJSON.get("result"))){
                     //replace the condition based on the primary key column of the record
-                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sAddrssID = " + SQLUtil.toSQL(this.getAddress()), "xBrgyName»xTownName»xProvName");
+                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sAddrssID = " + SQLUtil.toSQL(this.getAddressID()), "xBrgyName»xTownName»xProvName");
                     
                     if (!lsSQL.isEmpty()){
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
@@ -566,7 +581,8 @@ public class Model_Client_Address implements GEntity{
                             poJSON.put("message", poGRider.getErrMsg());
                         }
                     } else {
-                        poJSON.put("result", "success");
+                        poJSON.put("result", "error");
+                        poJSON.put("continue", true);
                         poJSON.put("message", "No updates has been made.");
                     }
                 } else {
@@ -621,6 +637,25 @@ public class Model_Client_Address implements GEntity{
         
     }
     public JSONObject SearchBarangay(String fsValue, boolean fbByCode) {
+        
+        JSONObject loJSON;
+        if (fbByCode){
+            if (fsValue.equals((String) getBarangayID())) {
+                loJSON = new JSONObject();
+                loJSON.put("result", "success");
+                loJSON.put("message", "Search barangay success.");
+                return loJSON;
+            }
+        }else{
+            if(getValue(21)!= null && !getValue(21).toString().trim().isEmpty()){
+                if (fsValue.equals(getValue(21))){
+                    loJSON = new JSONObject();
+                    loJSON.put("result", "success");
+                    loJSON.put("message", "Search barangay success.");
+                    return loJSON;
+                }
+            }
+        }
       String lsSQL = "SELECT " +
                             "  a.sBrgyIDxx" +
                             ", a.sBrgyName" +
@@ -645,8 +680,6 @@ public class Model_Client_Address implements GEntity{
             lsSQL = MiscUtil.addCondition(lsSQL, "a.sBrgyName LIKE " + SQLUtil.toSQL(fsValue + "%"));
        
             
-      
-        JSONObject loJSON;
             
             
         loJSON = ShowDialogFX.Search(poGRider, 
@@ -666,12 +699,34 @@ public class Model_Client_Address implements GEntity{
                 loJSON.put("message", "Search barangay success.");
                 return loJSON;
             }else {
-                loJSON.put("result", "success");
+                loJSON.put("result", "error");
                 loJSON.put("message", "No record selected.");
                 return loJSON;
             }
     }
     public JSONObject SearchTown(String fsValue, boolean fbByCode) {
+        
+        JSONObject loJSON;
+        if (fbByCode){
+            if (fsValue.equals((String) getTownID())) {
+                loJSON = new JSONObject();
+                loJSON.put("result", "success");
+                loJSON.put("message", "Search town success.");
+                return loJSON;
+            }
+        }else{
+            
+            String townProvince = getValue(20) + ", " + getValue(22);
+            System.out.println("fsValue = " + fsValue);
+            System.out.println("townProvince = " + townProvince);
+            if (fsValue.equals(townProvince)){
+                loJSON = new JSONObject();
+                loJSON.put("result", "success");
+                loJSON.put("message", "Search town success.");
+                return loJSON;
+            }
+        }
+        
        String lsSQL = "SELECT " +
                             "  a.sTownIDxx" +
                             ", a.sTownName" + 
@@ -690,7 +745,7 @@ public class Model_Client_Address implements GEntity{
        
             
       
-        JSONObject loJSON;
+        System.out.println("lsSQL Town = " + lsSQL);
         
         loJSON = ShowDialogFX.Search(poGRider, 
                             lsSQL, 
@@ -699,20 +754,20 @@ public class Model_Client_Address implements GEntity{
                             "sTownIDxx»sTownName»sZippCode»sProvName", 
                             "a.sTownIDxx»a.sTownName»a.sZippCode»b.sProvName", 
                             fbByCode ? 0 : 1);
+        System.out.println("loJSON Town = " + loJSON);
             
             if (loJSON != null) {
                 setTownID((String) loJSON.get("sTownIDxx"));
                 setTownName((String) loJSON.get("sTownName"));
-                
-//                setValue(12, (String) loJSON.get("sTownName"));
-//                setValue(14, (String) loJSON.get("sProvName"));
                 setProvinceName((String) loJSON.get("sProvName"));
+                setBarangayID("");
+                setBarangayName("");
                 loJSON.put("result", "success");
                 loJSON.put("message", "Search town success.");
 //                loJSON.put("message", "Search town success.");
                 return loJSON;
             }else {
-                loJSON.put("result", "success");
+                loJSON.put("result", "error");
                 loJSON.put("message", "No record selected.");
                 return loJSON;
             }
@@ -721,8 +776,9 @@ public class Model_Client_Address implements GEntity{
 
     @Override
     public int getEditMode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return pnEditMode;
     }
+    
     
     
 }
