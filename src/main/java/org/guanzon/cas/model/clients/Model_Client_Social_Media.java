@@ -345,6 +345,7 @@ public class Model_Client_Social_Media implements GEntity{
                 if (!lsSQL.isEmpty()){
                     if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                         poJSON.put("result", "success");
+                        poJSON.put("sSocialID", getSocialID());
                         poJSON.put("message", "Record saved successfully.");
                     } else {
                         poJSON.put("result", "error");
@@ -368,6 +369,7 @@ public class Model_Client_Social_Media implements GEntity{
                     if (!lsSQL.isEmpty()){
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                             poJSON.put("result", "success");
+                            poJSON.put("sSocialID", getSocialID());
                             poJSON.put("message", "Record saved successfully.");
                         } else {
                             poJSON.put("result", "error");

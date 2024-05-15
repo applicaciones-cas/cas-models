@@ -1,42 +1,36 @@
-package org.guanzon.cas.model.clients;
+package org.guanzon.cas.models;
 
+import org.guanzon.cas.model.clients.*;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
 import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.guanzon.appdriver.constant.EditMode;
 import org.guanzon.appdriver.constant.Logical;
-import org.guanzon.appdriver.constant.RecordStatus;
 import org.guanzon.appdriver.iface.GEntity;
 import org.json.simple.JSONObject;
-
 
 /**
  *
  * @author Michael Cuison
  */
-public class Model_Client_Mail implements GEntity{
+public class Model_AP_Client_Ledger implements GEntity{
     
-    final String XML = "Model_Client_Mail.xml";
+    final String XML = "Model_AP_Client_Ledger.xml";
     Connection poConn;          //connection
     CachedRowSet poEntity;      //rowset
     String psMessage;           //warning, success or error message
-    
-    
     GRider poGRider;
     int pnEditMode;
     public JSONObject poJSON;
-    
-    public Model_Client_Mail(GRider poValue){
+    public Model_AP_Client_Ledger(GRider poValue){
         if (poValue.getConnection() == null){
             System.err.println("Database connection is not set.");
             System.exit(1);
@@ -44,12 +38,10 @@ public class Model_Client_Mail implements GEntity{
         pnEditMode = EditMode.UNKNOWN;
         poGRider = poValue;
         poConn = poGRider.getConnection();
-        
         initialize();
     }
 
-    
-        @Override
+    @Override
     public String getColumn(int fnCol) {
         try {
             return poEntity.getMetaData().getColumnLabel(fnCol); 
@@ -68,10 +60,6 @@ public class Model_Client_Mail implements GEntity{
         return -1;
     }
 
-    /**
-     * Gets the total number of column.
-     * @return total number of column
-     */
     @Override
     public int getColumnCount() {
         try {
@@ -83,143 +71,11 @@ public class Model_Client_Mail implements GEntity{
         return -1;
     }
 
-
-    /** 
-     * this is your table name
-     **/
     @Override
     public String getTable() {
-        return "Client_eMail_Address";
+        return "AP_Client_Ledger";
     }
-     @Override
-    public void list() {
-        Method[] methods = this.getClass().getMethods();
-        
-        System.out.println("List of public methods for class " + this.getClass().getName() + ":");
-        for (Method method : methods) {
-            System.out.println(method.getName());
-        }
-    }
-    /**
-     * Sets the Email ID of this record.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setEmailID(String fsValue){
-        return setValue("sEmailIDx", fsValue);
-    }
-    
-    /**
-     * @return The Email ID of this record. 
-     */
-    public String getEmailID(){
-        return (String) getValue("sEmailIDx");
-    }
-    
-    /**
-     * Sets the Owner ID of this record.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setClientID(String fsValue){
-        return setValue("sClientID", fsValue);
-    }
-    
-    /**
-     * @return The Owner ID of this record. 
-     */
-    public String getClientID(){
-        return (String) getValue("sClientID");
-    }
-    
-    /**
-     * Sets the Entry no.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setEntryNo(int fsValue){
-        return setValue("nEntryNox", fsValue);
-    }
-    
-    /**
-     * @return The Entry no.
-     */
-    public int getEntryNo(){
-        return (int) getValue("nEntryNox");
-    }
-    
-     /**
-     * Sets the email address.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setEmail(String fsValue){
-        return setValue("sEMailAdd", fsValue);
-    }
-    
-    /**
-     * @return The email address.
-     */
-    public String getEmail(){
-        return (String) getValue("sEMailAdd");
-    }
-    
-    /**
-     * Sets the priority.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setPriority(int fsValue){
-        return setValue("nPriority", fsValue);
-    }
-    
-    /**
-     * @return The priority.
-     */
-    public int getPriority(){
-        return (int) getValue("nPriority");
-    }
-    
-    
-    /**
-     * Sets the user encoded/updated the record.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setModifiedBy(String fsValue){
-        return setValue("sModified", fsValue);
-    }
-    
-    /**
-     * @return The user encoded/updated the record 
-     */
-    public String getModifiedBy(){
-        return (String) getValue("sModified");
-    }
-    
-    /**
-     * Sets the date and time the record was modified.
-     * 
-     * @param fdValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setModifiedDate(Date fdValue){
-        return setValue("dModified", fdValue);
-    }
-    
-    /**
-     * @return The date and time the record was modified.
-     */
-    public Date getModifiedDate(){
-        return (Date) getValue("dModified");
-    }
-    
+
     @Override
     public Object getValue(int fnColumn) {
         try {
@@ -239,30 +95,221 @@ public class Model_Client_Mail implements GEntity{
         }
         return null;
     }
-
+    
+    @Override
+    public void list() {
+        Method[] methods = this.getClass().getMethods();
+        
+        System.out.println("List of public methods for class " + this.getClass().getName() + ":");
+        for (Method method : methods) {
+            System.out.println(method.getName());
+        }
+    }
+    /**
+     * Sets the ID of this record.
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setClientID(String fsValue){
+        return setValue("sClientID", fsValue);
+    }
+    
+    /** 
+     * @return The ID of this record. 
+     */
+    public String getClientID(){
+        return (String) getValue("sClientID");
+    }
+    
+    
+    /**
+     * Sets the number of ledger
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setLedgerNo(String fsValue){
+        return setValue("nLedgerNo", fsValue);
+    }
+    
+    /**
+     * @return The number of ledger
+     */
+    public String getLedgerNo(){
+        return (String) getValue("nLedgerNo");
+    }
+    
+    /**
+     * Sets the transaction date.<br>
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setTransactionDate(String fsValue){
+        return setValue("dTransact", fsValue);
+    }
+    
+    /**
+     * @return The transaction date. 
+     */
+    public String getTransactionDate(){
+        return (String) getValue("dTransact");
+    }
+    
+    /**
+     * Sets the Source Code .
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setSourceCode(String fsValue){
+        return setValue("sSourceCd", fsValue);
+    }
+    
+    /**
+     * @return The Source Code. 
+     */
+    public String getSourceCode(){
+        return (String) getValue("sSourceCd");
+    }
+    
+    /**
+     * Sets the Source Number .
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setSourceNo(String fsValue){
+        return setValue("sSourceNo", fsValue);
+    }
+    
+    /**
+     * @return The Source Number. 
+     */
+    public String getSourceNo(){
+        return (String) getValue("sSourceNo");
+    }
+    
+    /**
+     * Sets the Amount In .
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setAmountIn(String fsValue){
+        return setValue("nAmountIn", fsValue);
+    }
+    
+    /**
+     * @return The Amount In. 
+     */
+    public Double getAmountIn(){
+        return (Double) getValue("nAmountIn");
+    }
+    
+    /**
+     * Sets the Amount Out .
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setAmountOut(String fsValue){
+        return setValue("nAmountOt", fsValue);
+    }
+    
+    /**
+     * @return The Amount Out. 
+     */
+    public Double getAmountOut(){
+        return (Double) getValue("nAmountOt");
+    }
+    
+    /**
+     * Sets the date and time the record was posted.
+     * 
+     * @param fdValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setPostedDate(Date fdValue){
+        return setValue("dPostedxx", fdValue);
+    }
+    
+    /**
+     * @return The date and time the record was posted.
+     */
+    public Date getPostedDate(){
+        return (Date) getValue("dPostedxx");
+    }
+    
+    /**
+     * Sets the Available Balance .
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setAvailableBalance(String fsValue){
+        return setValue("nABalance", fsValue);
+    }
+    
+    /**
+     * @return The Available Balance. 
+     */
+    public Double getAvailableBalance(){
+        return (Double) getValue("nABalance");
+    }
+    
+    /**
+     * Sets the date and time the record was modified.
+     * 
+     * @param fdValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setModifiedDate(Date fdValue){
+        return setValue("dModified", fdValue);
+    }
+    
+    /**
+     * @return The date and time the record was modified.
+     */
+    public Date getModifiedDate(){
+        return (Date) getValue("dModified");
+    }
+    
+    public String getMessage(){
+        return psMessage;
+    }
+    
     private String getSQL(){
         return "SELECT" +
-                    ", sClientID" +
-                    ", nEntryNox" +
-                    ", sEmailAdd" +
-                    ", nPriority" +
+                    "  sClientID" +
+                    ", nLedgerNo" +
+                    ", dTransact" +
+                    ", sSourceCd" +
+                    ", sSourceNo" +
+                    ", nAmountIn" +
+                    ", nAmountOt" +
+                    ", dPostedxx" +
+                    ", nABalance" +
+                    ", dModified" +
                 " FROM " + getTable();
     }
+
     private void initialize(){
         
         try {
             poEntity = MiscUtil.xml2ResultSet(System.getProperty("sys.default.path.metadata") + XML, getTable());
             
+            
             poEntity.last();
             poEntity.moveToInsertRow();
 
-            MiscUtil.initRowSet(poEntity);  
+            MiscUtil.initRowSet(poEntity);
+         //replace with the primary key column info
+//            poEntity.updateString("sSocialID", MiscUtil.getNextCode(getTable(), "sSocialID", true, poConn, poGRider.getBranchCode()));
+            poEntity.updateString("sSourceCd", Logical.NO);
+            poEntity.updateString("sSourceNo", Logical.YES);
             
-            
-            poEntity.updateString("sEmailIDx", MiscUtil.getNextCode(getTable(), "sEmailIDx", true, poConn, poGRider.getBranchCode()));
-            poEntity.updateString("cPrimaryx", Logical.NO);
-            poEntity.updateString("cOwnerxxx", Logical.NO);
-            poEntity.updateString("cRecdStat", Logical.YES);
             poEntity.insertRow();
             poEntity.moveToCurrentRow();
 
@@ -271,15 +318,15 @@ public class Model_Client_Mail implements GEntity{
             e.printStackTrace();
             System.exit(1);
         }
-    } 
+    }    
     
-  
+
     @Override
     public JSONObject newRecord() {
         pnEditMode = EditMode.ADDNEW;
         
         //replace with the primary key column info
-        setEmailID(MiscUtil.getNextCode(getTable(), "sEmailIDx", true, poGRider.getConnection(), poGRider.getBranchCode()));
+        setClientID(MiscUtil.getNextCode(getTable(), "sClientID", true, poGRider.getConnection(), poGRider.getBranchCode()));
         
         poJSON = new JSONObject();
         poJSON.put("result", "success");
@@ -287,11 +334,11 @@ public class Model_Client_Mail implements GEntity{
     }
 
     @Override
-    public JSONObject openRecord(String fsValue) { pnEditMode = EditMode.UPDATE;
+    public JSONObject openRecord(String fsValue) {
         poJSON = new JSONObject();
 
         String lsSQL = MiscUtil.makeSelect(this);
-        lsSQL = MiscUtil.addCondition(lsSQL, "sEmailIDx = " + SQLUtil.toSQL(fsValue));
+        lsSQL = MiscUtil.addCondition(lsSQL, "sClientID = " + SQLUtil.toSQL(fsValue));
 
         ResultSet loRS = poGRider.executeQuery(lsSQL);
 
@@ -326,15 +373,13 @@ public class Model_Client_Mail implements GEntity{
             String lsSQL;
             if (pnEditMode == EditMode.ADDNEW){
                 //replace with the primary key column info
-                setEmailID(MiscUtil.getNextCode(getTable(), "sEmailIDx", true, poGRider.getConnection(), poGRider.getBranchCode()));
-                
+                setClientID(MiscUtil.getNextCode(getTable(), "sClientID", true, poGRider.getConnection(), poGRider.getBranchCode()));
                 setModifiedDate(poGRider.getServerDate());
                 lsSQL = MiscUtil.makeSQL(this);
                 
                 if (!lsSQL.isEmpty()){
                     if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                         poJSON.put("result", "success");
-                        poJSON.put("sEmailIDx", getEmailID());
                         poJSON.put("message", "Record saved successfully.");
                     } else {
                         poJSON.put("result", "error");
@@ -345,20 +390,19 @@ public class Model_Client_Mail implements GEntity{
                     poJSON.put("message", "No record to save.");
                 }
             } else {
-                Model_Client_Mail loOldEntity = new Model_Client_Mail(poGRider);
+                Model_AP_Client_Ledger loOldEntity = new Model_AP_Client_Ledger(poGRider);
                 
-                setModifiedDate(poGRider.getServerDate());
                 //replace with the primary key column info
-                JSONObject loJSON = loOldEntity.openRecord(this.getEmailID());
+                JSONObject loJSON = loOldEntity.openRecord(this.getClientID());
+                setModifiedDate(poGRider.getServerDate());
                 
                 if ("success".equals((String) loJSON.get("result"))){
                     //replace the condition based on the primary key column of the record
-                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sEmailIDx = " + SQLUtil.toSQL(this.getEmailID()));
+                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sSocialID = " + SQLUtil.toSQL(this.getClientID()));
                     
                     if (!lsSQL.isEmpty()){
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                             poJSON.put("result", "success");
-                            poJSON.put("sEmailIDx", getEmailID());
                             poJSON.put("message", "Record saved successfully.");
                         } else {
                             poJSON.put("result", "error");
@@ -379,75 +423,27 @@ public class Model_Client_Mail implements GEntity{
             poJSON.put("message", "Invalid update mode. Unable to save record.");
             return poJSON;
         }
-        
         return poJSON;
-//
-//        poJSON =  new JSONObject();
-//        try {
-//            lsSQL = MiscUtil.rowset2SQL(poEntity, 
-//                    getTable(),
-//                    "",
-//                    "");
-//        
-//            if (pnEditMode == EditMode.ADDNEW){           
-//                lsSQL = MiscUtil.getNextCode(getTable(), "sEmailIDx", false, poGRider.getConnection(), "");
-//                poEntity.updateObject("sEmailIDx", lsSQL);
-//                poEntity.updateRow();
-//
-//                lsSQL = MiscUtil.rowset2SQL(poEntity, getTable(), "");
-//            } else {            
-//                lsSQL = MiscUtil.rowset2SQL(poEntity, 
-//                                            getTable(), 
-//                                            "", 
-//                                            "sEmailIDx = " + SQLUtil.toSQL(poEntity.getString("sEmailIDx")));
-//            }
-//            
-//            if (!lsSQL.equals("")){
-//                if(poGRider.executeQuery(lsSQL, getTable(), "", "") == 0){
-//                    if(!poGRider.getErrMsg().isEmpty()){ 
-//                        poJSON.put("result", "error");
-//                        poJSON.put("message", poGRider.getErrMsg());
-//                        return poJSON;
-//                    }
-//                }else {
-//                    poJSON.put("result", "error");
-//                    poJSON.put("message", "No record updated");
-//                    return poJSON;
-//                }
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Model_Client_Mobile.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return poJSON;
+
     }
-    
-    /**
-     * Sets column value.
-     * 
-     * @param fnColumn - column index number
-     * @param foValue - value
-     * @return result as success/failed
-     */
+
     @Override
-    public JSONObject setValue(int fnColumn, Object foValue) {
-        try {              
-            poJSON = MiscUtil.validateColumnValue(System.getProperty("sys.default.path.metadata") + XML, MiscUtil.getColumnLabel(poEntity, fnColumn), foValue);
-            if ("error".equals((String) poJSON.get("result"))) return poJSON;
-            
-            poEntity.updateObject(fnColumn, foValue);
-            poEntity.updateRow();
-            
+    public JSONObject setValue(int lnColumn, Object foValue) {
+        
             poJSON = new JSONObject();
+        try {
+            poEntity.updateObject(lnColumn, foValue);
+            poEntity.updateRow();
             poJSON.put("result", "success");
-            poJSON.put("value", getValue(fnColumn));
+            poJSON.put("value", getValue(lnColumn));
+            return poJSON;
         } catch (SQLException e) {
             e.printStackTrace();
+            psMessage = e.getMessage();
             poJSON.put("result", "error");
             poJSON.put("message", e.getMessage());
+            return poJSON;
         }
-        
-        return poJSON;
     }
 
     @Override
