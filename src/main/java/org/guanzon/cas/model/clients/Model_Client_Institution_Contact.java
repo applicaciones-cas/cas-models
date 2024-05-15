@@ -526,6 +526,7 @@ public class Model_Client_Institution_Contact implements GEntity{
                 if (!lsSQL.isEmpty()){
                     if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                         poJSON.put("result", "success");
+                        poJSON.put("sContctID", getContactID());
                         poJSON.put("message", "Record saved successfully.");
                     } else {
                         poJSON.put("result", "error");
@@ -549,6 +550,7 @@ public class Model_Client_Institution_Contact implements GEntity{
                     if (!lsSQL.isEmpty()){
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0){
                             poJSON.put("result", "success");
+                            poJSON.put("sContctID", getContactID());
                             poJSON.put("message", "Record saved successfully.");
                         } else {
                             poJSON.put("result", "error");
