@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
  *
  * @author Maynard
  */
-public class Model_Account_Accreditation implements GEntity {
+public class Model_Account_Accreditations implements GEntity {
 
     final String XML = "Model_Account_Client_Acccreditation.xml";
 
@@ -34,7 +34,7 @@ public class Model_Account_Accreditation implements GEntity {
      *
      * @param foValue - GhostRider Application Driver
      */
-    public Model_Account_Accreditation(GRider foValue) {
+    public Model_Account_Accreditations(GRider foValue) {
         if (foValue == null) {
             System.err.println("Application Driver is not set.");
             System.exit(1);
@@ -281,7 +281,7 @@ public class Model_Account_Accreditation implements GEntity {
                     poJSON.put("message", "No record to save.");
                 }
             } else {
-                Model_Account_Accreditation loOldEntity = new Model_Account_Accreditation(poGRider);
+                Model_Account_Accreditations loOldEntity = new Model_Account_Accreditations(poGRider);
 
                 //replace with the primary key column info
                 
