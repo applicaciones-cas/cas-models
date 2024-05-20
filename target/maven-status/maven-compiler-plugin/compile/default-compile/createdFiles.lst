@@ -4,6 +4,7 @@ org\guanzon\cas\models\Model_Account_Accreditation.class
 org\guanzon\cas\models\Model_AP_Client_Ledger.class
 org\guanzon\cas\model\clients\Model_Client_Institution_Contact.class
 org\guanzon\cas\model\clients\ap\Model_AP_Client_Ledger.class
+org\guanzon\cas\models\Model_Account_Accreditations.class
 org\guanzon\cas\model\clients\ap\Model_AP_Client_Master.class
 org\guanzon\cas\model\clients\ar\Model_AR_Client_Ledger.class
 org\guanzon\cas\model\clients\Model_Client_Address.class

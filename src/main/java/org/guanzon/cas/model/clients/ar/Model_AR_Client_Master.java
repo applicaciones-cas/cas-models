@@ -5,7 +5,11 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.rowset.CachedRowSet;
 import org.guanzon.appdriver.base.CommonUtils;
 import org.guanzon.appdriver.base.GRider;
@@ -21,7 +25,7 @@ import org.json.simple.JSONObject;
  */
 public class Model_AR_Client_Master implements GEntity {
 
-    final String XML = "Model_AP_Client_Master.xml";
+    final String XML = "Model_AR_Client_Master.xml";
 
     GRider poGRider;                //application driver
     CachedRowSet poEntity;          //rowset
@@ -218,21 +222,19 @@ public class Model_AR_Client_Master implements GEntity {
      * @param fsCondition - filter values
      * @return result as success/failed
      */
-    @Override
-    public JSONObject openRecord(String fsCondition) {
+     public JSONObject openRecord(String fsValue) { pnEditMode = EditMode.UPDATE;
         poJSON = new JSONObject();
 
-        String lsSQL = MiscUtil.makeSelect(this, "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName");
-
-        //replace the condition based on the primary key column of the record
-        lsSQL = MiscUtil.addCondition(lsSQL, " sClientID = " + SQLUtil.toSQL(fsCondition));
-
+        String lsSQL = getSQL();
+        lsSQL = MiscUtil.addCondition(getSQL(), "a.sClientID = " + SQLUtil.toSQL(fsValue));
+        System.out.println(lsSQL);
         ResultSet loRS = poGRider.executeQuery(lsSQL);
 
         try {
-            if (loRS.next()) {
-                for (int lnCtr = 1; lnCtr <= loRS.getMetaData().getColumnCount(); lnCtr++) {
+            if (loRS.next()){
+                for (int lnCtr = 1; lnCtr <= loRS.getMetaData().getColumnCount(); lnCtr++){
                     setValue(lnCtr, loRS.getObject(lnCtr));
+                    System.out.println(loRS.getMetaData().getColumnLabel(lnCtr) + " = " + loRS.getString(lnCtr));
                 }
 
                 pnEditMode = EditMode.UPDATE;
@@ -243,6 +245,7 @@ public class Model_AR_Client_Master implements GEntity {
                 poJSON.put("result", "error");
                 poJSON.put("message", "No record to load.");
             }
+            MiscUtil.close(loRS);
         } catch (SQLException e) {
             poJSON.put("result", "error");
             poJSON.put("message", e.getMessage());
@@ -250,6 +253,39 @@ public class Model_AR_Client_Master implements GEntity {
 
         return poJSON;
     }
+//    @Override
+//    public JSONObject openRecord(String fsCondition) {
+//        poJSON = new JSONObject();
+//
+////        String lsSQL = MiscUtil.makeSelect(this, "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
+//        String lsSQL = makeSelectSQL();
+//
+//        //replace the condition based on the primary key column of the record
+//        lsSQL = MiscUtil.addCondition(lsSQL, " sClientID = " + SQLUtil.toSQL(fsCondition));
+//        System.out.println("lsSQL = " + lsSQL);
+//        ResultSet loRS = poGRider.executeQuery(lsSQL);
+//
+//        try {
+//            if (loRS.next()) {
+//                for (int lnCtr = 1; lnCtr <= loRS.getMetaData().getColumnCount(); lnCtr++) {
+//                    setValue(lnCtr, loRS.getObject(lnCtr));
+//                }
+//
+//                pnEditMode = EditMode.UPDATE;
+//
+//                poJSON.put("result", "success");
+//                poJSON.put("message", "Record loaded successfully.");
+//            } else {
+//                poJSON.put("result", "error");
+//                poJSON.put("message", "No record to load.");
+//            }
+//        } catch (SQLException e) {
+//            poJSON.put("result", "error");
+//            poJSON.put("message", e.getMessage());
+//        }
+//
+//        return poJSON;
+//    }
 
     /**
      * Save the entity.
@@ -440,9 +476,14 @@ public class Model_AR_Client_Master implements GEntity {
      */
     public Date getClientSince() {
         System.out.println("dCltSince" + getValue("dCltSince"));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         if(!getValue("dCltSince").toString().isEmpty()){
-            date = CommonUtils.toDate(getValue("dCltSince").toString());
+            try {
+                date = formatter.parse(getValue("dCltSince").toString());
+            } catch (ParseException ex) {
+                Logger.getLogger(Model_AR_Client_Master.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return date;
     }
@@ -482,8 +523,8 @@ public class Model_AR_Client_Master implements GEntity {
     /**
      * @return The Beginning Balance of this record.
      */
-    public String getBeginBal() {
-        return (String) getValue("nBegBalxx");
+    public Object getBeginBal() {
+        return (Object) getValue("nBegBalxx");
     }
 
     /**
@@ -499,8 +540,8 @@ public class Model_AR_Client_Master implements GEntity {
     /**
      * @return The Discount of this record.
      */
-    public String getDiscount() {
-        return (String) getValue("nDiscount");
+    public Object getDiscount() {
+        return (Object) getValue("nDiscount");
     }
       /**
      * Sets the Discount of this record.
@@ -516,8 +557,8 @@ public class Model_AR_Client_Master implements GEntity {
     /**
      * @return The Credit Limit of this record.
      */
-    public String getCreditLimit() {
-        return (String) getValue("nCredLimt");
+    public Object getCreditLimit() {
+        return (Object) getValue("nCredLimt");
     }
       /**
      * Sets the Credit Limit of this record.
@@ -532,8 +573,8 @@ public class Model_AR_Client_Master implements GEntity {
     /**
      * @return The ABalance of this record.
      */
-    public String getABalance() {
-        return (String) getValue("nABalance");
+    public Object getABalance() {
+        return (Object) getValue("nABalance");
     }
       /**
      * Sets the ABalance of this record.
@@ -548,8 +589,8 @@ public class Model_AR_Client_Master implements GEntity {
     /**
      * @return The ABalance of this record.
      */
-    public String getOBalance() {
-        return (String) getValue("nOBalance");
+    public Object getOBalance() {
+        return (Object) getValue("nOBalance");
     }
       /**
      * Sets the ABalance of this record.
@@ -601,10 +642,24 @@ public class Model_AR_Client_Master implements GEntity {
     }
     
     /**
-     * @return The Client Contact Person Position of this record. 
+     * @return The Client Contact Person of this record. 
+     */
+    public String getContactNo(){
+        return (String) getValue("xMobileNo");
+    }
+    
+    /**
+     * @return The Client Contact Person Mobile No of this record. 
      */
     public String getContactPosition(){
         return (String) getValue("xCPerson1");
+    }
+    
+    /**
+     * @return The Client Tax ID no of this record. 
+     */
+    public String getTaxIDNumber(){
+        return (String) getValue("xTaxIDNox");
     }
     
     /**
@@ -717,7 +772,7 @@ public class Model_AR_Client_Master implements GEntity {
      * @return SQL Statement
      */
     public String makeSQL() {
-        return MiscUtil.makeSQL(this, "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName");
+        return MiscUtil.makeSQL(this, "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
     }
 
     /**
@@ -726,7 +781,45 @@ public class Model_AR_Client_Master implements GEntity {
      * @return SelectSQL Statement
      */
     public String makeSelectSQL() {
-        return MiscUtil.makeSelect(this,"xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName");
+        return MiscUtil.makeSelect(this,"xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
+    }
+    private String getSQL(){
+        return "SELECT" +
+                        "  a.sClientID" +
+                        ", a.sAddrssID" +
+                        ", a.sContctID" +
+                        ", a.sCategrCd" +
+                        ", a.dCltSince" +
+                        ", a.dBegDatex" +
+                        ", a.nBegBalxx" +
+                        ", a.sTermIDxx" +
+                        ", a.nDiscount" +
+                        ", a.nCredLimt" +
+                        ", a.nABalance" +
+                        ", a.nOBalance" +
+                        ", a.nLedgerNo" +
+                        ", a.cVatablex" +
+                        ", a.cRecdStat" +
+                        ", a.sModified" +
+                        ", a.dModified" +
+                        ", b.sCompnyNm xClientNm" +
+                        ", TRIM(CONCAT(c.sHouseNox, ' ', c.sAddressx, ', ', g.sBrgyName, ' ', h.sTownName, ', ', i.sProvName)) xAddressx" +
+                        ", d.sCPerson1 xCPerson1" +
+                        ", d.sCPPosit1 xCPPosit1" +
+                        ", e.sDescript xCategrNm" +
+                        ", f.sDescript xTermName" +
+                        ", b.sTaxIDNox xTaxIDNox" +
+                        ", d.sMobileNo xMobileNo" +
+                    " FROM AR_Client_Master a" +
+                        " LEFT JOIN Client_Master b ON a.sClientID = b.sClientID" +
+                        " LEFT JOIN Client_Address c" + 
+                            " LEFT JOIN Barangay  g ON c.sBrgyIDxx = g.sBrgyIDxx" +
+                            " LEFT JOIN TownCity h ON c.sTownIDxx = h.sTownIDxx" +
+                            " LEFT JOIN Province i ON h.sProvIDxx = i.sProvIDxx" +
+                        " ON a.sAddrssID = c.sAddrssID" +
+                        " LEFT JOIN Client_Institution_Contact_Person d ON a.sContctID = d.sContctID" +
+                        " LEFT JOIN Category e ON a.sCategrCd = e.sCategrCd" +
+                        " LEFT JOIN Term f ON a.sTermIDxx = f.sTermCode";
     }
 
     private void initialize() {

@@ -238,6 +238,7 @@ public class Model_AP_Client_Ledger implements GEntity {
                 poJSON.put("message", "Record loaded successfully.");
             } else {
                 poJSON.put("result", "error");
+                poJSON.put("continue", true);
                 poJSON.put("message", "No record to load.");
             }
         } catch (SQLException e) {

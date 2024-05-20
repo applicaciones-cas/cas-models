@@ -84,8 +84,7 @@ public class Model_Client_Master implements GEntity{
     public String getTable() {
         return "Client_Master";
     }
-
-    @Override
+@Override
     public Object getValue(int fnColumn) {
         try {
             return poEntity.getObject(fnColumn);
@@ -95,15 +94,40 @@ public class Model_Client_Master implements GEntity{
         return null;
     }
 
+    /**
+     * Gets the value of a column index name.
+     *
+     * @param fsColumn - column index name
+     * @return object value
+     */
     @Override
     public Object getValue(String fsColumn) {
         try {
-            return poEntity.getObject(fsColumn);
+            return poEntity.getObject(MiscUtil.getColumnIndex(poEntity, fsColumn));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+//    @Override
+//    public Object getValue(int fnColumn) {
+//        try {
+//            return poEntity.getObject(fnColumn);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public Object getValue(String fsColumn) {
+//        try {
+//            return poEntity.getObject(fsColumn);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
     
     @Override
     public void list() {
