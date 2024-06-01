@@ -304,7 +304,7 @@ public class Model_AR_Client_Master implements GEntity {
                 setModifiedDate(poGRider.getServerDate());
 //                lsSQL = makeSQL();
 
-                lsSQL = MiscUtil.makeSQL(this,  "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName");
+                lsSQL = MiscUtil.makeSQL(this,  "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
                 if (!lsSQL.isEmpty()) {
                     if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
                         poJSON.put("result", "success");
@@ -326,7 +326,7 @@ public class Model_AR_Client_Master implements GEntity {
                 setModifiedDate(poGRider.getServerDate());
                 if ("success".equals((String) loJSON.get("result"))) {
                     //replace the condition based on the primary key column of the record
-                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sClientID = " + SQLUtil.toSQL(this.getClientID()), "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName");
+                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sClientID = " + SQLUtil.toSQL(this.getClientID()), "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
 
                     if (!lsSQL.isEmpty()) {
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
@@ -838,6 +838,8 @@ public class Model_AR_Client_Master implements GEntity {
             poEntity.updateInt("nLedgerNo", 0);
             poEntity.updateString("cVatablex", RecordStatus.INACTIVE);
             poEntity.updateString("cRecdStat", RecordStatus.INACTIVE);
+            poEntity.updateObject("dCltSince", poGRider.getServerDate());
+            poEntity.updateObject("dBegDatex", poGRider.getServerDate());
 
             poEntity.insertRow();
             poEntity.moveToCurrentRow();
