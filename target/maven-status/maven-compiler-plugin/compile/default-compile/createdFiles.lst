@@ -1,0 +1,6 @@
+org\guanzon\cas\inventory\models\Model_Inv_Ledger.class
+org\guanzon\cas\inventory\models\CasInventoryModels.class
+org\guanzon\cas\inventory\models\Model_Inv_Hist_Ledger.class
+org\guanzon\cas\inventory\models\Model_Inv_Serial.class
+org\guanzon\cas\inventory\models\Model_Inventory.class
+org\guanzon\cas\inventory\models\Model_Inv_Master.class
