@@ -676,6 +676,14 @@ public class Model_AR_Client_Master implements GEntity {
         return (String) getValue("xCategrNm");
     }
     
+    
+    /**
+     * @return The Address of this record. 
+     */
+    public JSONObject setCategoryName(String lsValue){
+        return setValue("xCategrNm", lsValue);
+    }
+    
     /**
      * @return The Term name of this record. 
      */
@@ -840,6 +848,7 @@ public class Model_AR_Client_Master implements GEntity {
             poEntity.updateString("cRecdStat", RecordStatus.INACTIVE);
             poEntity.updateObject("dCltSince", poGRider.getServerDate());
             poEntity.updateObject("dBegDatex", poGRider.getServerDate());
+            poEntity.updateObject("sClientID", "");
 
             poEntity.insertRow();
             poEntity.moveToCurrentRow();
