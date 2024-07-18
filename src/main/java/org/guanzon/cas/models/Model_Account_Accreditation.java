@@ -164,7 +164,7 @@ public class Model_Account_Accreditation implements GEntity {
 
             poJSON = new JSONObject();
             poJSON.put("result", "success");
-            poJSON.put("value", getValue(fnColumn));
+            poJSON.put(MiscUtil.getColumnLabel(poEntity, fnColumn), getValue(fnColumn));
         } catch (SQLException e) {
             e.printStackTrace();
             poJSON.put("result", "error");
@@ -290,7 +290,7 @@ public class Model_Account_Accreditation implements GEntity {
                 System.out.println("loJSON = " + loJSON);
                 if ("success".equals((String) loJSON.get("result"))) {
                     //replace the condition based on the primary key column of the record
-                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sTransNox = " + SQLUtil.toSQL(this.getTransactionNo()), "xCompnyNm»xCPerson1»xCPPosit1»xMobileNo»sEMailAdd");
+                    lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sTransNox = " + SQLUtil.toSQL(this.getTransactionNo()), "xCompnyNm»xCPerson1»xCPPosit1»xMobileNo»sEMailAdd»xCategrNm");
                     System.out.println("lsSQL = " + lsSQL);
                     if (!lsSQL.isEmpty()) {
                         if (poGRider.executeQuery(lsSQL, getTable(), poGRider.getBranchCode(), "") > 0) {
@@ -497,6 +497,12 @@ public class Model_Account_Accreditation implements GEntity {
     public String getCategoryName(){
         return (String) getValue("xCategrNm");
     }
+    /*
+     * @return The Category Name of this record. 
+     */
+    public JSONObject setCategoryName(String fsValue){
+        return setValue("xCategrNm",fsValue);
+    }
     
     /**
      * @return The Address of this record. 
@@ -679,6 +685,8 @@ public class Model_Account_Accreditation implements GEntity {
     public String getEmailAddress() {
         return (String) getValue("sEMailAdd");
     }
+    
+
 
     
     /**
@@ -687,7 +695,7 @@ public class Model_Account_Accreditation implements GEntity {
      * @return SQL Statement
      */
     public String makeSQL() {
-        return MiscUtil.makeSQL(this, "xCompnyNm»xCPerson1»xCPPosit1»xMobileNo»xEMailAdd");
+        return MiscUtil.makeSQL(this, "xCompnyNm»xCPerson1»xCPPosit1»xMobileNo»xEMailAdd»xCategrNm");
     }
     public String getSQL(){
         return "SELECT " +
@@ -707,7 +715,8 @@ public class Model_Account_Accreditation implements GEntity {
                 "  b.sCompnyNm xCompnyNm, " +
                 "  d.sCPerson1 xCPerson1, " +
                 "  d.sCPPosit1 xCPPosit1, " +
-                "  d.sMobileNo xMobileNo " +
+                "  d.sMobileNo xMobileNo, " +
+                "  e.sDescript xCategrNm " +
                 "FROM " +
                 "  Account_Client_Acccreditation a " +
                 "  LEFT JOIN Client_Master b " +
