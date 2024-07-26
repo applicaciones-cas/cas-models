@@ -302,6 +302,7 @@ public class Model_AR_Client_Master implements GEntity {
                 //replace with the primary key column info
 
                 setModifiedDate(poGRider.getServerDate());
+                setModifiedBy(poGRider.getUserID());
 //                lsSQL = makeSQL();
 
                 lsSQL = MiscUtil.makeSQL(this,  "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");
@@ -324,6 +325,7 @@ public class Model_AR_Client_Master implements GEntity {
                 JSONObject loJSON = loOldEntity.openRecord(this.getClientID());
                 
                 setModifiedDate(poGRider.getServerDate());
+                setModifiedBy(poGRider.getUserID());
                 if ("success".equals((String) loJSON.get("result"))) {
                     //replace the condition based on the primary key column of the record
                     lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sClientID = " + SQLUtil.toSQL(this.getClientID()), "xClientNm»xAddressx»xCPerson1»xCPPosit1»xCategrNm»xTermName»xTaxIDNox»xMobileNo");

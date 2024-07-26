@@ -265,7 +265,8 @@ public class Model_Account_Accreditation implements GEntity {
             if (pnEditMode == EditMode.ADDNEW) {
                 //replace with the primary key column info
                 setTransactionNo(MiscUtil.getNextCode(getTable(), "sTransNox", true, poGRider.getConnection(), poGRider.getBranchCode()));
-
+                setModifiedDate(poGRider.getServerDate());
+                setModifiedBy(poGRider.getUserID());
                 lsSQL = makeSQL();
 
                 if (!lsSQL.isEmpty()) {
@@ -287,6 +288,9 @@ public class Model_Account_Accreditation implements GEntity {
                 
                 System.out.println("TransactionNo = " + this.getTransactionNo());
                 JSONObject loJSON = loOldEntity.openRecord(getValue("sTransNox").toString());
+                
+                setModifiedDate(poGRider.getServerDate());
+                setModifiedBy(poGRider.getUserID());
                 System.out.println("loJSON = " + loJSON);
                 if ("success".equals((String) loJSON.get("result"))) {
                     //replace the condition based on the primary key column of the record

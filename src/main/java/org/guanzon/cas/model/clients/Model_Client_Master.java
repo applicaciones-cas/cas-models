@@ -801,6 +801,7 @@ public class Model_Client_Master implements GEntity{
                 //replace with the primary key column info
                 setClientID(MiscUtil.getNextCode(getTable(), "sClientID", true, poGRider.getConnection(), poGRider.getBranchCode()));
                 setModifiedDate(poGRider.getServerDate());
+                setModifiedBy(poGRider.getUserID());
                 
                 lsSQL = MiscUtil.makeSQL(this, "xBirthPlc»xCitizenx»xSpouseNm");
                 
@@ -826,6 +827,7 @@ public class Model_Client_Master implements GEntity{
                 if ("success".equals((String) loJSON.get("result"))){
                     //replace the condition based on the primary key column of the record
                     setModifiedDate(poGRider.getServerDate());
+                    setModifiedBy(poGRider.getUserID());
                     
                     lsSQL = MiscUtil.makeSQL(this, loOldEntity, "sClientID = " + SQLUtil.toSQL(this.getClientID()), "xBirthPlc»xCitizenx»xSpouseNm");
                     
