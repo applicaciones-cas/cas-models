@@ -134,23 +134,6 @@ public class Model_Client_Mail implements GEntity{
         return (String) getValue("sClientID");
     }
     
-    /**
-     * Sets the Entry no.
-     * 
-     * @param fsValue 
-     * @return  True if the record assignment is successful.
-     */
-    public JSONObject setEntryNo(int fsValue){
-        return setValue("nEntryNox", fsValue);
-    }
-    
-    /**
-     * @return The Entry no.
-     */
-    public int getEntryNo(){
-        return (int) getValue("nEntryNox");
-    }
-    
      /**
      * Sets the email address.
      * 
@@ -168,39 +151,57 @@ public class Model_Client_Mail implements GEntity{
         return (String) getValue("sEMailAdd");
     }
     
-    /**
-     * Sets the priority.
+    
+     /**
+     * Sets the email owner.
      * 
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setPriority(int fsValue){
-        return setValue("nPriority", fsValue);
+    public JSONObject setOwner(String fsValue){
+        return setValue("cOwnerxxx", fsValue);
     }
     
     /**
-     * @return The priority.
+     * @return The email owner.
      */
-    public int getPriority(){
-        return (int) getValue("nPriority");
+    public String getOwner(){
+        return (String) getValue("cOwnerxxx");
     }
     
-    
-    /**
-     * Sets the user encoded/updated the record.
+     /**
+     * Sets the email cPrimaryx.
      * 
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setModifiedBy(String fsValue){
-        return setValue("sModified", fsValue);
+    public JSONObject setPrimary(String fsValue){
+        return setValue("cPrimaryx", fsValue);
     }
     
     /**
-     * @return The user encoded/updated the record 
+     * @return The email cPrimaryx.
      */
-    public String getModifiedBy(){
-        return (String) getValue("sModified");
+    public String getPrimary(){
+        return (String) getValue("cPrimaryx");
+    }
+    
+    
+     /**
+     * Sets the email cRecdStat.
+     * 
+     * @param fsValue 
+     * @return  True if the record assignment is successful.
+     */
+    public JSONObject setRecordStat(String fsValue){
+        return setValue("cRecdStat", fsValue);
+    }
+    
+    /**
+     * @return The email cRecdStat.
+     */
+    public String getRecordStat(){
+        return (String) getValue("cRecdStat");
     }
     
     /**
@@ -245,7 +246,7 @@ public class Model_Client_Mail implements GEntity{
                     ", sClientID" +
                     ", nEntryNox" +
                     ", sEmailAdd" +
-                    ", nPriority" +
+                    ", nPrior   ity" +
                 " FROM " + getTable();
     }
     private void initialize(){
