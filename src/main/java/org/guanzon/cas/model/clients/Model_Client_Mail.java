@@ -246,7 +246,7 @@ public class Model_Client_Mail implements GEntity{
                     ", sClientID" +
                     ", nEntryNox" +
                     ", sEmailAdd" +
-                    ", nPrior   ity" +
+                    ", nPriority" +
                 " FROM " + getTable();
     }
     private void initialize(){
