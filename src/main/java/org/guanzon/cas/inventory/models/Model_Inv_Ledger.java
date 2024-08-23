@@ -409,8 +409,8 @@ public class Model_Inv_Ledger implements GEntity {
     /**
      * @return The nLedgerNo of this record.
      */
-    public String getLedgerNo() {
-        return (String) getValue("nLedgerNo");
+    public int getLedgerNo() {
+        return (int) getValue("nLedgerNo");
     }
     
     /**
@@ -419,7 +419,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue
      * @return result as success/failed
      */
-    public JSONObject setLedgerNo(String fsValue) {
+    public JSONObject setLedgerNo(int fsValue) {
         return setValue("nLedgerNo", fsValue);
     }
 
@@ -482,7 +482,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityIn(String fsValue){
+    public JSONObject setQuantityIn(int fsValue){
         return setValue("nQtyInxxx", fsValue);
     }
     
@@ -500,7 +500,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOut(String fsValue){
+    public JSONObject setQuantityOut(int fsValue){
         return setValue("nQtyOutxx", fsValue);
     }
     
@@ -519,7 +519,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOrder(String fsValue){
+    public JSONObject setQuantityOrder(int fsValue){
         return setValue("nQtyOrder", fsValue);
     }
     
@@ -537,7 +537,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityIssue(String fsValue){
+    public JSONObject setQuantityIssue(int fsValue){
         return setValue("nQtyIssue", fsValue);
     }
     
@@ -555,7 +555,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setPurchasePrice(String fsValue){
+    public JSONObject setPurchasePrice(int fsValue){
         return setValue("nPurPrice", fsValue);
     }
     
@@ -573,7 +573,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setUnitPrice(String fsValue){
+    public JSONObject setUnitPrice(int fsValue){
         return setValue("nUnitPrce", fsValue);
     }
     
@@ -610,7 +610,7 @@ public class Model_Inv_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOnHand(String fsValue){
+    public JSONObject setQuantityOnHand(int fsValue){
         return setValue("nQtyOnHnd", fsValue);
     }
     

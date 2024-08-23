@@ -405,12 +405,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
         return setValue("sWHouseID", fsValue);
     }
     
-    /**
-     * @return The nLedgerNo of this record.
-     */
-    public String getLedgerNo() {
-        return (String) getValue("nLedgerNo");
-    }
+
     
     /**
      * Sets the nLedgerNo of this record.
@@ -481,7 +476,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityIn(String fsValue){
+    public JSONObject setQuantityIn(int fsValue){
         return setValue("nQtyInxxx", fsValue);
     }
     
@@ -499,7 +494,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOut(String fsValue){
+    public JSONObject setQuantityOut(int fsValue){
         return setValue("nQtyOutxx", fsValue);
     }
     
@@ -518,7 +513,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOrder(String fsValue){
+    public JSONObject setQuantityOrder(int fsValue){
         return setValue("nQtyOrder", fsValue);
     }
     
@@ -536,7 +531,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityIssue(String fsValue){
+    public JSONObject setQuantityIssue(int fsValue){
         return setValue("nQtyIssue", fsValue);
     }
     
@@ -554,7 +549,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setPurchasePrice(String fsValue){
+    public JSONObject setPurchasePrice(int fsValue){
         return setValue("nPurPrice", fsValue);
     }
     
@@ -572,7 +567,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setUnitPrice(String fsValue){
+    public JSONObject setUnitPrice(int fsValue){
         return setValue("nUnitPrce", fsValue);
     }
     
@@ -609,7 +604,7 @@ public class Model_Inv_Hist_Ledger implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setQuantityOnHand(String fsValue){
+    public JSONObject setQuantityOnHand(int fsValue){
         return setValue("nQtyOnHnd", fsValue);
     }
     
@@ -794,5 +789,47 @@ public class Model_Inv_Hist_Ledger implements GEntity {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public int getLedgerNo() {
+        return (int) getValue("nLedgerNo");
+    }
+    
+    /**
+     * Sets the nLedgerNo of this record.
+     *
+     * @param fsValue
+     * @return result as success/failed
+     */
+    public JSONObject setLedgerNo(Number fsValue) {
+        return setValue("nLedgerNo", fsValue);
+    }
+    
+    
+    public String getSQL(){
+        return "SELECT" +
+                        "   a.sStockIDx" +
+                        " , a.sBranchCd" +
+                        " , a.sWHouseID" +
+                        " , a.nLedgerNo" +
+                        " , a.dTransact" +
+                        " , a.sSourceCd" +
+                        " , a.sSourceNo" +
+                        " , a.nQtyInxxx" +
+                        " , a.nQtyOutxx" +
+                        " , a.nQtyOrder" +
+                        " , a.nQtyIssue" +
+                        " , a.nPurPrice" +
+                        " , a.nUnitPrce" +
+//                        " , a.nQtyOnHnd" +
+                        " , a.dExpiryxx" +
+                        " , a.sModified" +
+                        " , a.dModified" +
+                        " , b.sBarCodex xBarCodex" +
+                        " , b.sDescript xDescript" +
+                        " , c.sWHouseNm xWHouseNm " +
+                        "FROM Inv_Hist_Ledger a" +
+                        "    LEFT JOIN Inventory b ON a.sStockIDx = b.sStockIDx" +
+                        "    LEFT JOIN Warehouse c ON a.sWhouseID = c.sWhouseID";
     }
 }

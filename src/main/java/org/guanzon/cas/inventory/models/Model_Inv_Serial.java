@@ -361,7 +361,7 @@ public class Model_Inv_Serial implements GEntity {
      * @return result as success/failed
      */
     public JSONObject setSerialID(String fsValue) {
-        return setValue("sStockIDx", fsValue);
+        return setValue("sSerialID", fsValue);
     }
 
     /**
@@ -430,7 +430,7 @@ public class Model_Inv_Serial implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setUnitPrice(String fsValue){
+    public JSONObject setUnitPrice(Number fsValue){
         return setValue("nUnitPrce", fsValue);
     }
     
@@ -739,6 +739,28 @@ public class Model_Inv_Serial implements GEntity {
         return MiscUtil.makeSelect(this, "xBarCodex»xDescript»xBranchNm");
     }
 
+        
+    public String getSQL(){
+        return "SELECT" +
+                        "   a.sSerialID" +
+                        " , a.sBranchCd" +
+                        " , a.sSerial01" +
+                        " , a.sSerial02" +
+                        " , a.nUnitPrce" +
+                        " , a.sStockIDx" +
+                        " , a.cLocation" +
+                        " , a.cSoldStat" +
+                        " , a.cUnitType" +
+                        " , a.sCompnyID" +
+                        " , a.sWarranty" +
+                        " , a.dModified" +
+                        " , b.sBarCodex xBarCodex" +
+                        " , b.sDescript xDescript" +
+                        " , c.sBranchNm xBranchNm " +
+                        "FROM Inv_Serial a" +
+                        "    LEFT JOIN Inventory b ON a.sStockIDx = b.sStockIDx" +
+                        "    LEFT JOIN Branch c ON a.sBranchCd = c.sBranchCd";
+    }
     private void initialize() {
         try {
             poEntity = MiscUtil.xml2ResultSet(System.getProperty("sys.default.path.metadata") + XML, getTable());
@@ -759,5 +781,25 @@ public class Model_Inv_Serial implements GEntity {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public Object getBrandName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getModelName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getColorName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getMeasure() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getCompnyName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

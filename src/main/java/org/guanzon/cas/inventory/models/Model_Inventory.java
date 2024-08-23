@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Date;
 import javax.sql.rowset.CachedRowSet;
+import org.guanzon.appdriver.base.CommonUtils;
 import org.guanzon.appdriver.base.GRider;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
@@ -370,6 +371,23 @@ public class Model_Inventory implements GEntity {
     public String getStockID() {
         return (String) getValue("sStockIDx");
     }
+    
+        /**
+     * Sets the sStockIDx of this record.
+     *
+     * @param fsValue
+     * @return result as success/failed
+     */
+    public JSONObject setDescription(String fsValue) {
+        return setValue("sDescript", fsValue);
+    }
+
+    /**
+     * @return The sStockIDx of this record.
+     */
+    public String getDescription() {
+        return (String) getValue("sDescript");
+    }
 
     /**
      * Sets the sBarCodex of this record.
@@ -454,6 +472,17 @@ public class Model_Inventory implements GEntity {
      */
     public String getCategCd2() {
         return (String) getValue("sCategCd2");
+    }
+    
+    public JSONObject setBrandName(String fsValue) {
+        return setValue("xDescript", fsValue);
+    }
+
+    /**
+     * @return The sCategCd2 of this record.
+     */
+    public String getBrandName() {
+        return (String) getValue("xDescript");
     }
     
     /**
@@ -746,7 +775,7 @@ public class Model_Inventory implements GEntity {
      * @param fsValue 
      * @return  True if the record assignment is successful.
      */
-    public JSONObject setMaxLevel(String fsValue){
+    public JSONObject setLocaMaxLevel(String fsValue){
         return setValue("nMaxLevel", fsValue);
     }
     
@@ -829,6 +858,17 @@ public class Model_Inventory implements GEntity {
      */
     public String getUnitType(){
         return (String) getValue("cUnitType");
+    }
+    
+    public JSONObject setInvTypeCode(String fsValue){
+        return setValue("sInvTypCd", fsValue);
+    }
+    
+    /**
+     * @return The cUnitType. 
+     */
+    public String getInvTypeCode(){
+        return (String) getValue("sInvTypCd");
     }
     
     /**
@@ -1023,6 +1063,71 @@ public class Model_Inventory implements GEntity {
     public String makeSelectSQL() {
         return MiscUtil.makeSelect(this, "xCategNm1»xCategNm2»xCategNm3»xCategNm4»xBrandNme»xModelNme»xModelDsc»xColorNme»xMeasurNm»xInvTypNm»xSuperCde»xSuperDsc");
     }
+    
+    public String getSQL(){
+        String lsSQL = "SELECT" +
+                            "  a.sStockIDx" +
+                            ", a.sBarCodex" +
+                            ", a.sDescript" +
+                            ", a.sBriefDsc" +
+                            ", a.sAltBarCd" +
+                            ", a.sCategCd1" +
+                            ", a.sCategCd2" +
+                            ", a.sCategCd3" +
+                            ", a.sCategCd4" +
+                            ", a.sBrandCde" +
+                            ", a.sModelCde" +
+                            ", a.sColorCde" +
+                            ", a.sMeasurID" +
+                            ", a.sInvTypCd" +
+                            ", a.nUnitPrce" +
+                            ", a.nSelPrice" +
+                            ", a.nDiscLev1" +
+                            ", a.nDiscLev2" +
+                            ", a.nDiscLev3" +
+                            ", a.nDealrDsc" +
+                            ", a.nMinLevel" +
+                            ", a.nMaxLevel" +
+                            ", a.cComboInv" +
+                            ", a.cWthPromo" +
+                            ", a.cSerialze" +
+                            ", a.cUnitType" +
+                            ", a.cInvStatx" +
+                            ", a.nShlfLife" +
+                            ", a.sSupersed" +
+                            ", a.cRecdStat" +
+                            ", a.sModified" +
+                            ", a.dModified" +
+                            ", b.sDescript xCategNm1" +
+                            ", c.sDescript xCategNm2" +
+                            ", d.sDescript xCategNm3" +
+                            ", e.sDescript xCategNm4" +
+                            ", f.sDescript xBrandNme" +
+                            ", g.sModelNme xModelNme" +
+                            ", g.sDescript xModelDsc" +
+                            ", h.sDescript xColorNme" +
+                            ", i.sMeasurNm xMeasurNm" +
+                            ", j.sDescript xInvTypNm" +
+                            ", k.sBarCodex xSuperCde" +
+                            ", k.sDescript xSuperDsc" +
+                            ", c.sMainCatx xMainCatx" +
+                        " FROM "  + getTable() + " a"+ 
+                            " LEFT JOIN Category b ON a.sCategCd1 = b.sCategrCd" +
+                            " LEFT JOIN Category_Level2 c ON a.sCategCd2 = c.sCategrCd" +
+                            " LEFT JOIN Category_Level3 d ON a.sCategCd3 = d.sCategrCd" +
+                            " LEFT JOIN Category_Level4 e ON a.sCategCd4 = e.sCategrCd" +
+                            " LEFT JOIN Brand f ON a.sBrandCde = f.sBrandCde" +
+                            " LEFT JOIN Model g ON a.sModelCde = g.sModelCde" +
+                            " LEFT JOIN Color h ON a.sColorCde = h.sColorCde" +
+                            " LEFT JOIN Measure i ON a.sMeasurID = i.sMeasurID" +
+                            " LEFT JOIN Inv_Type j ON c.sInvTypCd = j.sInvTypCd" +
+                            " LEFT JOIN Inventory k ON a.sSupersed = k.sStockIDx";
+//        /validate result based on the assigned inventory type.
+        if (!System.getProperty("store.inventory.industry").isEmpty())
+            lsSQL = MiscUtil.addCondition(lsSQL, " a.sCategCd1 IN " + CommonUtils.getParameter(System.getProperty("store.inventory.industry")));
+        
+        return lsSQL;
+    }
 
     private void initialize() {
         try {
@@ -1045,4 +1150,70 @@ public class Model_Inventory implements GEntity {
             System.exit(1);
         }
     }
+
+    public JSONObject setUnitPrice(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setSelPrice(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setDiscountLvl1(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setDiscountLvl2(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setDiscountLevel3(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setDealerDiscount(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getDealerDiscount() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setMinLevel(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setMaxLevel(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setShlfLife(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setCategCd3(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setCategName1(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public Object getCategName1() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public Object getCategName2() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getCategName3() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public Object getCategName4() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public Object getSectionName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
 }

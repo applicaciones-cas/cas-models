@@ -775,7 +775,7 @@ public class Model_Inv_Master implements GEntity {
      * @param fdValue
      * @return result as success/failed
      */
-    public JSONObject setBarCodex(Date fdValue) {
+    public JSONObject setBarCodex(String fdValue) {
         return setValue("xBarCodex", fdValue);
     }
 
@@ -792,7 +792,7 @@ public class Model_Inv_Master implements GEntity {
      * @param fdValue
      * @return result as success/failed
      */
-    public JSONObject setDescript(Date fdValue) {
+    public JSONObject setDescript(String fdValue) {
         return setValue("xDescript", fdValue);
     }
     
@@ -869,4 +869,41 @@ public class Model_Inv_Master implements GEntity {
             System.exit(1);
         }
     }
+
+    public JSONObject setLocationnName(String bldg_1A) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setWareHouseNm(String building_1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setBinNumber(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setBegQtyxx(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setAvgMonSl(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setResvOrdr(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public JSONObject setQtyOnHnd(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public JSONObject getSectionName(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getSectionName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
