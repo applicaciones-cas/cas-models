@@ -1,2 +1,2 @@
-# cas-inventory-models
+# cas-models
  
